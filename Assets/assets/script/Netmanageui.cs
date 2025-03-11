@@ -7,6 +7,7 @@ public class Netmanageui : MonoBehaviour
     [SerializeField] private GameObject cli;
     [SerializeField] private GameObject ho;
     [SerializeField] private GameObject ima;
+    [SerializeField] private GameObject cam;
     public void Hostme()
     {
         NetworkManager.Singleton.StartHost();
@@ -23,6 +24,7 @@ private void Removeit()
         cli.SetActive(false);
         ho.SetActive(false);
         ima.SetActive(false);
+        cam.SetActive(false);
     }
 
 }

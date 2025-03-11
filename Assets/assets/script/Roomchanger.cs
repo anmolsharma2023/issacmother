@@ -1,8 +1,10 @@
 using UnityEngine;
-
+using System.Collections;
 public class Roomchanger : MonoBehaviour
 {
     public Transform[] transforms; // Array of transforms to check
+    [SerializeField] private GameObject currcam;
+    [SerializeField] private GameObject nextcam;
 
     // Function to handle collision
     void OnCollisionEnter(Collision collision)
@@ -10,27 +12,62 @@ public class Roomchanger : MonoBehaviour
         // Check if the collision is with the desired GameObject
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Run your function here
-            RunFunctionWithGizmos(collision.gameObject);
+            GameObject issac = collision.gameObject;
+            Issacprops issacprops = issac.GetComponent<Issacprops>();
+            if (issacprops != null)
+            {
+            
+                if (!issacprops.spawnednow)
+              { issacprops.spawnednow = true;
+                    // Run your function here
+                    RunFunctionWithGizmos(collision.gameObject);
+                    
+                  
+                    StartCoroutine(SetVariableToFalseAfterDelay(issac));
+                }
+            }
         }
     }
+    private IEnumerator SetVariableToFalseAfterDelay(GameObject issac)
+    {
+        Issacprops issacprops = issac.GetComponent<Issacprops>();
+        if (issacprops.iamowner)
+        {
+            currcam.SetActive(false);
+            nextcam.SetActive(true);
+        }
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(2f);
+        
+        if (issacprops != null)
+        {
+           
 
+            issacprops.spawnednow = false;
+                
+            
+        }
+
+    }
     // Example function that uses gizmos
     void RunFunctionWithGizmos(GameObject gg)
     {
         // Example gizmo drawing
         Debug.DrawRay(transform.position, Vector3.up * 5, Color.red, 1f);
-
+        
         // Loop through each transform in the array
         foreach (Transform t in transforms)
         {
+            Debug.Log("Changing roomsdd");
             // Check if there is no GameObject at the transform's position
             if (!IsObjectAtPosition(t.position))
             {
+               
                 // Select this transform if no object is present
                 Vector3 newpos = t.position;
-                newpos.y=gg.transform.position.y;
+               // newpos.y=gg.transform.position.y;
                 gg.transform.position = newpos;
+                break;
             }
         }
     }

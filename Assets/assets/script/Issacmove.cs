@@ -18,8 +18,14 @@ public class Issacmove : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
 
-        
-
+        if (IsOwner)
+        {
+            Issacprops issacprops = GetComponent<Issacprops>();
+            if (issacprops != null)
+            {
+                issacprops.iamowner = true;
+            }
+        }
         // Find the GameObject with the tag "joysticke"
         GameObject joystickObject = GameObject.FindWithTag("Joysticke");
         GameObject sppo = GameObject.FindWithTag("Spa1");

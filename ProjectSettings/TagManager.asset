@@ -11,6 +11,7 @@ TagManager:
   - Doorui
   - Sound
   - Spa1
+  - Camera
   layers:
   - Default
   - TransparentFX
