@@ -11,11 +11,30 @@ public class Camfollowplayer : MonoBehaviour
 
     void Start()
     {// Store the original camera position
-        originalPosition = transform.position;
+        //originalPosition = transform.position;
+
         if (player != null)
         {
             // Calculate the initial offset
             offset = transform.position - player.transform.position;
+        }
+        else
+        {
+            // Define the tag you want to search for
+            string tagToFind = "Player";
+
+            // Find all GameObjects with the specified tag
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tagToFind);
+            Debug.Log(objectsWithTag.Length);
+            // Do something with the found objects
+            foreach (GameObject obj in objectsWithTag)
+            {
+               Issacprops issacprops = obj.GetComponent<Issacprops>();
+                if (issacprops.iamowner)
+                {
+                    player=obj;
+                }
+            }
         }
     }
 

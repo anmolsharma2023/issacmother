@@ -25,6 +25,21 @@ public class Issacmove : NetworkBehaviour
             {
                 issacprops.iamowner = true;
             }
+            // Define the tag you want to search for
+            string tagToFind = "Camera";
+
+            // Find all GameObjects with the specified tag
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tagToFind);
+            Debug.Log(objectsWithTag.Length);
+            // Do something with the found objects
+            foreach (GameObject obj in objectsWithTag)
+            {
+                Camfollowplayer camfollowplayer = obj.GetComponent<Camfollowplayer>();
+                if (camfollowplayer != null)
+                {
+                    camfollowplayer.player=gameObject;
+                }
+            }
         }
         // Find the GameObject with the tag "joysticke"
         GameObject joystickObject = GameObject.FindWithTag("Joysticke");
