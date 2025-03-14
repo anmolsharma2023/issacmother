@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Cysharp.Threading.Tasks;
+using TMPro;
+using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Multiplayer;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
@@ -45,7 +49,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 public class SessionManager : Singleton<SessionManager> 
 {
     ISession activeSession;
-
+    public GameObject parentObject; // Assign in the Inspector
+    public GameObject netmanage; // Assign in the Inspector
     ISession ActiveSession
     {
         get => activeSession;
@@ -65,9 +70,17 @@ public class SessionManager : Singleton<SessionManager>
             await UnityServices.InitializeAsync(); // Initialize Unity Gaming Services SDKs.
             await AuthenticationService.Instance.SignInAnonymouslyAsync(); // Anonymously authenticate the player
             Debug.Log($"Sign in anonymously succeeded! PlayerID: {AuthenticationService.Instance.PlayerId}");
+        
+            var sessions = await QuerySessions();
+            
+            foreach (var session in sessions)
+            {
 
+                Debug.Log($"Session ID: {session.Id}, Join Code: x");
+                
+            }
             // Start a new session as a host
-         //   StartSessionAsHost();
+            //   StartSessionAsHost();
         }
         catch (Exception e)
         {
@@ -75,6 +88,8 @@ public class SessionManager : Singleton<SessionManager>
         }
     }
 
+  
+   
     async UniTask<Dictionary<string, PlayerProperty>> GetPlayerProperties()
     {
         // Custom game-specific properties that apply to an individual player, ie: name, role, skill level, etc.
@@ -83,32 +98,39 @@ public class SessionManager : Singleton<SessionManager>
         return new Dictionary<string, PlayerProperty> { { playerNamePropertyKey, playerNameProperty } };
     }
 
-    async void StartSessionAsHost()
+   public async void StartSessionAsHost()
     {
         var playerProperties = await GetPlayerProperties();
-
+        
         var options = new SessionOptions
         {
-            MaxPlayers = 2,
+            MaxPlayers = 3,
             IsLocked = false,
             IsPrivate = false,
             PlayerProperties = playerProperties
         }.WithRelayNetwork(); // or WithDistributedAuthorityNetwork() to use Distributed Authority instead of Relay
 
         ActiveSession = await MultiplayerService.Instance.CreateSessionAsync(options);
+        NetworkManager.Singleton.StartHost();
+
         Debug.Log($"Session {ActiveSession.Id} created! Join code: {ActiveSession.Code}");
     }
 
-    async UniTaskVoid JoinSessionById(string sessionId)
+    public async UniTaskVoid JoinSessionById(string sessionId)
     {
         ActiveSession = await MultiplayerService.Instance.JoinSessionByIdAsync(sessionId);
         Debug.Log($"Session {ActiveSession.Id} joined!");
+        Debug.Log("bitch bich");
+        NetworkManager.Singleton.StartClient();
+
     }
 
     async UniTaskVoid JoinSessionByCode(string sessionCode)
     {
         ActiveSession = await MultiplayerService.Instance.JoinSessionByCodeAsync(sessionCode);
         Debug.Log($"Session {ActiveSession.Id} joined!");
+        NetworkManager.Singleton.StartClient();
+
     }
 
     async UniTaskVoid KickPlayer(string playerId)
@@ -117,7 +139,7 @@ public class SessionManager : Singleton<SessionManager>
         await ActiveSession.AsHost().RemovePlayerAsync(playerId);
     }
 
-    async UniTask<IList<ISessionInfo>> QuerySessions()
+    public async UniTask<IList<ISessionInfo>> QuerySessions()
     {
         var sessionQueryOptions = new QuerySessionsOptions();
         QuerySessionsResults results = await MultiplayerService.Instance.QuerySessionsAsync(sessionQueryOptions);
