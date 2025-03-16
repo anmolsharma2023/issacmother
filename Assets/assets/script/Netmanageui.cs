@@ -11,40 +11,31 @@ public class Netmanageui : MonoBehaviour
     [SerializeField] private GameObject cam;
     [SerializeField] private GameObject joiho;
     [SerializeField] private GameObject scroll;
-    [SerializeField] private GameObject buttonforlobby;
-    public GameObject parentObject; // Assign the parent GameObject in the Inspector
-    private void SpawnButtonAsync(string id)
-    {
-        // Instantiate the button prefab
-        GameObject buttonObject = Instantiate(buttonforlobby, parentObject.transform);
-
-        // Set the parent
-        buttonObject.transform.SetParent(parentObject.transform);
-
-        // Get the Button and Text components
-        Button button = buttonObject.GetComponent<Button>();
-        Text buttonText = buttonObject.GetComponentInChildren<Text>();
-
-        // Change the button text
-        buttonText.text = id;
-
-        // Add an OnClick listener
-        button.onClick.AddListener(() => { Tester(); });
-    }
+   
+    [SerializeField] private GameObject inpuu;
+    [SerializeField] private GameObject rella;
+  
+   
     private void Tester()
     {
         Debug.Log("FUK ITT");
     }
         public void Hostme()
     {
-        SessionManager.Instance.StartSessionAsHost();
-      //  NetworkManager.Singleton.StartHost();
+       // SessionManager.Instance.StartSessionAsHost();
+       Lobbymanage lobbymanage=rella.GetComponent<Lobbymanage>();
+        lobbymanage.CreateRelay();
+      
         Removeit();
     }
     public void Clientme()
     {
-        var sessions = SessionManager.Instance.QuerySessions().Forget();
-        //NetworkManager.Singleton.StartClient();
+        TMP_InputField tt=inpuu.GetComponent<TMP_InputField>();
+        string code = tt.text;
+        Lobbymanage lobbymanage = rella.GetComponent<Lobbymanage>();
+        lobbymanage.JoinRelay(code);
+        //    var sessions = SessionManager.Instance.QuerySessions().Forget();
+      
         Removeit();
 
     }
@@ -57,6 +48,7 @@ private void Removeit()
         cam.SetActive(false);
         joiho.SetActive(false);
         scroll.SetActive(false);
+        inpuu.SetActive(false);
     }
 
 }
