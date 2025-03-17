@@ -20,6 +20,18 @@ public class Issacmove : NetworkBehaviour
 
         if (IsOwner)
         {
+
+            // Define the tag you want to search for
+            string tagToFindloader = "LoadingScreen";
+
+            // Find all GameObjects with the specified tag
+            GameObject[] objectsWithTag1 = GameObject.FindGameObjectsWithTag(tagToFindloader);
+         //   Debug.Log(objectsWithTag.Length);
+            // Do something with the found objects
+            foreach (GameObject obj in objectsWithTag1)
+            {
+                obj.SetActive(false);
+            }
             Issacprops issacprops = GetComponent<Issacprops>();
             if (issacprops != null)
             {

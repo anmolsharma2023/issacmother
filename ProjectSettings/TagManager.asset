@@ -12,6 +12,7 @@ TagManager:
   - Sound
   - Spa1
   - Camera
+  - LoadingScreen
   layers:
   - Default
   - TransparentFX

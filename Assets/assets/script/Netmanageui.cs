@@ -11,11 +11,13 @@ public class Netmanageui : MonoBehaviour
     [SerializeField] private GameObject cam;
     [SerializeField] private GameObject joiho;
     [SerializeField] private GameObject scroll;
-   
+    [SerializeField] private GameObject createe;
+
     [SerializeField] private GameObject inpuu;
     [SerializeField] private GameObject rella;
-  
-   
+    [SerializeField] private GameObject loader;
+
+
     private void Tester()
     {
         Debug.Log("FUK ITT");
@@ -24,6 +26,7 @@ public class Netmanageui : MonoBehaviour
     {
        // SessionManager.Instance.StartSessionAsHost();
        Lobbymanage lobbymanage=rella.GetComponent<Lobbymanage>();
+        loader.SetActive(true);
         lobbymanage.CreateRelay();
       
         Removeit();
@@ -33,6 +36,8 @@ public class Netmanageui : MonoBehaviour
         TMP_InputField tt=inpuu.GetComponent<TMP_InputField>();
         string code = tt.text;
         Lobbymanage lobbymanage = rella.GetComponent<Lobbymanage>();
+        loader.SetActive(true);
+
         lobbymanage.JoinRelay(code);
         //    var sessions = SessionManager.Instance.QuerySessions().Forget();
       
@@ -42,6 +47,7 @@ public class Netmanageui : MonoBehaviour
     
 private void Removeit()
     {
+        createe.SetActive(false);
         cli.SetActive(false);
         ho.SetActive(false);
         ima.SetActive(false);
