@@ -16,6 +16,7 @@ public class Netmanageui : MonoBehaviour
     [SerializeField] private GameObject inpuu;
     [SerializeField] private GameObject rella;
     [SerializeField] private GameObject loader;
+    [SerializeField] private GameObject sounder;
 
 
     private void Tester()
@@ -24,6 +25,8 @@ public class Netmanageui : MonoBehaviour
     }
         public void Hostme()
     {
+        AudioManager aa=sounder.GetComponent<AudioManager>();
+        aa.PlayOneShot("button",gameObject);
        // SessionManager.Instance.StartSessionAsHost();
        Lobbymanage lobbymanage=rella.GetComponent<Lobbymanage>();
         loader.SetActive(true);
@@ -33,6 +36,8 @@ public class Netmanageui : MonoBehaviour
     }
     public void Clientme()
     {
+        AudioManager aa = sounder.GetComponent<AudioManager>();
+        aa.PlayOneShot("button", gameObject);
         TMP_InputField tt=inpuu.GetComponent<TMP_InputField>();
         string code = tt.text;
         Lobbymanage lobbymanage = rella.GetComponent<Lobbymanage>();

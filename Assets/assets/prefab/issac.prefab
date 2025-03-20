@@ -44,11 +44,11 @@ GameObject:
   - component: {fileID: 6707061806572353785}
   m_Layer: 0
   m_Name: Spot Light
-  m_TagString: Untagged
+  m_TagString: Issaclight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6983527661508334193
 Transform:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 972758032685208627}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 34.2, z: -9.44}
+  m_LocalPosition: {x: 0, y: 40, z: -7.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,10 +75,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 110
-  m_Range: 26
-  m_SpotAngle: 81.64045
-  m_InnerSpotAngle: 56.552277
+  m_Intensity: 107
+  m_Range: 24
+  m_SpotAngle: 179
+  m_InnerSpotAngle: 179
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -1057,6 +1057,7 @@ MonoBehaviour:
   detectionRange: 3
   referencePoint: {fileID: 5727927158389652244}
   speed: 10
+  issaclight: {fileID: 972758032685208627}
 --- !u!114 &3644540684653971551
 MonoBehaviour:
   m_ObjectHideFlags: 0

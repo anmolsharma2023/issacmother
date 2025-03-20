@@ -14,13 +14,13 @@ public class Issacmove : NetworkBehaviour
     public float speed = 5f; // Movement speed
     private Rigidbody rb; // Reference to the Rigidbody component
     private Joystick joystick;
-    
+    [SerializeField] GameObject issaclight;
     public override void OnNetworkSpawn()
     {
 
         if (IsOwner)
         {
-
+            issaclight.SetActive(true);
             // Define the tag you want to search for
             string tagToFindloader = "LoadingScreen";
 

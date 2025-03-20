@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed3125362c1c644abffbe83f0e9e739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounder: {fileID: 1973907894}
 --- !u!4 &75955382
 Transform:
   m_ObjectHideFlags: 0
@@ -1156,6 +1157,19 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
     loop: 1
+    spatialize: 0
+    minDistance: 3
+    maxDistance: 63.8
+    spread: 0
+  - name: button
+    clip: {fileID: 8300000, guid: 9f587be279579df46a456cd832c7a15c, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    loop: 0
     spatialize: 0
     minDistance: 3
     maxDistance: 63.8
